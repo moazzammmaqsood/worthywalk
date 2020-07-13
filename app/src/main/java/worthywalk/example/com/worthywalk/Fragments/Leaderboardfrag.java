@@ -552,12 +552,15 @@ User user;
 //                        data.add(new leaderinfo(name,knubs,name));
 
 
-                if(doc.getBoolean("Permission") ){
+                if(doc.getBoolean("Permission")!=null && doc.getBoolean("Permission") ){
                     String name=doc.getString("Firstname")+" "+doc.getString("Lastname");
                     String id=doc.getId();
                     String knubs=String.valueOf(doc.get("Totalknubs"));
                     if(doc.getString("Firstname")!=null)  data.add(new leaderinfo(name,knubs,id));
                     Log.d("infoo",name);
+
+                }else if(doc.getBoolean("Permission")==null){
+               Log.d("check error user ", doc.getId());
 
                 }
 ////

@@ -403,11 +403,12 @@ public class WalkActivity extends AppCompatActivity implements Chronometer.OnChr
         else   newknubs = (int) Math.round(steps + cal + totaldistance);
         if (newknubs < 0) newknubs = 0;
 
-        if(user.totalknubs<4000) {
+        if(user.totalknubs<3000) {
             if (timeSpent > 900000 && timeSpent <= 1800000) {
                 newknubs = newknubs + 30;
 
-            } else if (timeSpent > 180000 && timeSpent <= 3600000) {
+
+            } else if (timeSpent > 1800000 && timeSpent <= 3600000) {
                 newknubs = newknubs + 60;
             } else if (timeSpent > 3600000) {
                 newknubs = newknubs + 150;
@@ -624,7 +625,9 @@ return true;
 
 
                                 if (start) {
-
+                                    start = false;
+                                    startbtn.setText("START");
+                                    startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
 
                                     distanceOnMap = MyLocationService.getDistance(SensorForeground.loc) - calculatediscardeddistance();
 
@@ -634,8 +637,6 @@ return true;
                                     chronometer.stop();
                                     UpdateTextViews();
 
-                                    startbtn.setText("START");
-                                    startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
                                     final Intent serviceIntent = new Intent(WalkActivity.this, SensorForeground.class);
                                     serviceIntent.setAction(STOP);
                                     serviceIntent.putExtra(INDEX, index);
@@ -749,7 +750,7 @@ return true;
                                         });
                                         ContextCompat.startForegroundService(WalkActivity.this, serviceIntent);
                                         fusedLocationProviderClient.removeLocationUpdates(getPendingIntent());
-                                        start = false;
+
 
                                     } else {
                                         ContextCompat.startForegroundService(WalkActivity.this, serviceIntent);
