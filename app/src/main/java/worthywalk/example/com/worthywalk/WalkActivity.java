@@ -170,6 +170,7 @@ public class WalkActivity extends AppCompatActivity implements Chronometer.OnChr
 
     long dbknubs;
 
+    int flag = 0;
 
     double newdistance,newdiscarddistance,newcalculatedknubs, newoldknubs;
     List<LatLng> pathcoordinates;
@@ -623,12 +624,19 @@ return true;
                             {
 
 
-                                if (start)//when stop button hits
+                                if (start )//when stop button hits
                                 {
+                                    startbtn.setClickable(false);
+                                    startbtn.setEnabled(false);
+
+
                                     start = false;
                                     savingdata = true;
                                     startbtn.setText("START");
                                     startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
+
+
+
 
                                     distanceOnMap = MyLocationService.getDistance(SensorForeground.loc) - calculatediscardeddistance();
 
@@ -787,17 +795,27 @@ return true;
 
 
                                     }
+                                    Handler h = new Handler();
 
 
+                                    h.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startbtn.setClickable(true);
+                                            startbtn.setEnabled(true);
+
+                                        }
+                                    }, 1000);
                                 }
                                 else
                                 {
                                     if (!isServiceRunning) {
 
+
                                         SharedPreferences.Editor prefsEditor = sharedpreferences.edit();
                                         prefsEditor.putInt("Index", index);
                                         prefsEditor.commit();
-
+                                        flag = 0;
                                         startbtn.setText("STOP");
                                         startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_red_dark), PorterDuff.Mode.MULTIPLY);
                                         Intent serviceIntent = new Intent(WalkActivity.this, SensorForeground.class);
@@ -805,7 +823,7 @@ return true;
                                         serviceIntent.setAction(START);
                                         ContextCompat.startForegroundService(WalkActivity.this, serviceIntent);
                                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, getPendingIntent());
-                                        start = true;
+                                        //start = true;
 
                                         // This give time to other things to initialize first
                                         Handler handler = new Handler();
@@ -819,6 +837,16 @@ return true;
                                                 UpdateTextViews();
                                             }
                                         }, 100);
+
+                                        handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                start = true;
+                                                flag = 0;
+
+                                            }
+                                        }, 1000);
                                     }
                                 }
 
