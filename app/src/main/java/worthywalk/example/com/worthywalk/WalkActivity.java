@@ -96,6 +96,8 @@ public class WalkActivity extends AppCompatActivity implements Chronometer.OnChr
     boolean multiplyer=false;
     List<String> promocodes=new ArrayList<>();
 
+    boolean savingdata = false;
+
     int bonus=0;
     boolean validpromo=false;
 
@@ -603,10 +605,6 @@ return true;
 
                 if(tapped) {
 
-
-
-
-
                     if(saved) {
 
                         if(ContextCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
@@ -621,11 +619,14 @@ return true;
                                 Toast.makeText(getApplicationContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             }
 
-                            if (gps_enabled) {
+                            if (gps_enabled)
+                            {
 
 
-                                if (start) {
+                                if (start)//when stop button hits
+                                {
                                     start = false;
+                                    savingdata = true;
                                     startbtn.setText("START");
                                     startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
 
@@ -788,7 +789,9 @@ return true;
                                     }
 
 
-                                } else {
+                                }
+                                else
+                                {
                                     if (!isServiceRunning) {
 
                                         SharedPreferences.Editor prefsEditor = sharedpreferences.edit();
@@ -833,6 +836,12 @@ return true;
                             Permission();
 
                         }
+                        savingdata = false;
+
+                    }
+                    else if(savingdata)
+                    {
+                        Toast.makeText(context, "Session is being saved", Toast.LENGTH_SHORT).show();
                     }
                     else if(!saved) {
 
@@ -840,6 +849,7 @@ return true;
 
 
                     }
+
                 }
             }
         });
