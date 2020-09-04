@@ -153,8 +153,7 @@ public class SensorForeground extends Service {
 
     //27 steps burn 1KiloCalories
     public static double getCaloriesBurnt(){
-        return steps/27;
-    }
+        return steps/14;    }
 
     //Step count
     public static int getStepCount(){

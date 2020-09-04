@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -407,8 +408,8 @@ public class WalkActivity extends AppCompatActivity implements Chronometer.OnChr
         if (newknubs < 0) newknubs = 0;
 
         if(user.totalknubs<3000) {
-            if (timeSpent > 900000 && timeSpent <= 1800000) {
-                newknubs = newknubs + 30;
+                if (timeSpent > 900000 && timeSpent <= 1800000) {
+                    newknubs = newknubs + 30;
 
 
             } else if (timeSpent > 1800000 && timeSpent <= 3600000) {
@@ -610,6 +611,7 @@ return true;
 
                         if(ContextCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
 
+
                             if(  ( ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)){
                                 UpdateLocation();
                             }
@@ -634,9 +636,6 @@ return true;
                                     savingdata = true;
                                     startbtn.setText("START");
                                     startbtn.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
-
-
-
 
                                     distanceOnMap = MyLocationService.getDistance(SensorForeground.loc) - calculatediscardeddistance();
 
@@ -667,6 +666,7 @@ return true;
                                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                         /////make map clear
                                         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                        dialog.setCancelable(false);
 
 
                                         dialog.setContentView(R.layout.finishdilog);////your custom content
@@ -778,6 +778,7 @@ return true;
                                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WalkActivity.this);
                                         alertDialogBuilder.setTitle("Invalid Walk !");
                                         alertDialogBuilder.setMessage(message);
+
                                         alertDialogBuilder.setPositiveButton("Ok",
                                                 new DialogInterface.OnClickListener() {
                                                     @Override
@@ -791,7 +792,9 @@ return true;
 
 
                                         AlertDialog alertDialog = alertDialogBuilder.create();
+                                        alertDialog.setCanceledOnTouchOutside(false);
                                         alertDialog.show();
+
 
 
                                     }
@@ -1186,7 +1189,7 @@ else {
         docData.put("Datetime",c);
         docData.put("Steps",steps);
         docData.put("Boost",booster);
-
+        docData.put("Version",getCurrentVersion());
 
         docData.put("UserId",useruid);
 
@@ -1406,6 +1409,25 @@ else {
 
 
         resetSession();
+    }
+
+
+    private String getCurrentVersion(){
+        PackageManager pm = this.getPackageManager();
+        PackageInfo pInfo = null;
+        String currentVersion="";
+
+        try {
+            pInfo =  pm.getPackageInfo(this.getPackageName(),0);
+
+        } catch (PackageManager.NameNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        currentVersion = pInfo.versionName;
+        Log.d("checkpackage","in the curr" +currentVersion);
+
+        return currentVersion;
     }
 
 

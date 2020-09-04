@@ -1,9 +1,18 @@
 package worthywalk.example.com.worthywalk;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,6 +25,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 
@@ -52,6 +65,8 @@ boolean start=false;
 //    private MainActivityLocationCallback callback = new MainActivityLocationCallback(this);
 LoginManager loginManager;
     Avail avail=new Avail();
+    String currentVersion, latestVersion;
+    Dialog dialog;
     private Toolbar toolbar;
     private TextView mTextMessage;
     private TextView title;
@@ -111,6 +126,7 @@ LoginManager loginManager;
 
 
         firebasedb=new Firebasedb();
+        getCurrentVersion();
         mResources=firebasedb.getstoreads();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,new homeFragment(usermain)).commit();
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -126,6 +142,7 @@ LoginManager loginManager;
 //                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
+
 
 
 
@@ -148,6 +165,92 @@ LoginManager loginManager;
 
 
 
+    }
+
+    private void getCurrentVersion(){
+        PackageManager pm = this.getPackageManager();
+        PackageInfo pInfo = null;
+
+        try {
+            pInfo =  pm.getPackageInfo(this.getPackageName(),0);
+
+        } catch (PackageManager.NameNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        currentVersion = pInfo.versionName;
+        Log.d("checkpackage","in the curr" +currentVersion);
+
+        new GetLatestVersion().execute();
+
+    }
+
+    private class GetLatestVersion extends AsyncTask<String, String, JSONObject> {
+
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            try {
+//It retrieves the latest version by scraping the content of current version from play store at runtime
+                Document doc = Jsoup.connect("https://play.google.com/store/apps/details?id=worthywalk.example.com.worthywalk&hl=en").get();
+                latestVersion = doc.getElementsByClass("htlgb").get(6).text();
+                Log.d("checkpackage","in the doc" +latestVersion);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.d("checkpackage","in the finction");
+
+            }
+
+            return new JSONObject();
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            if(latestVersion!=null) {
+                if (!currentVersion.equalsIgnoreCase(latestVersion)){
+                    if(!isFinishing()){ //This would help to prevent Error : BinderProxy@45d459c0 is not valid; is your activity running? error
+                        showUpdateDialog();
+                        Log.d("checkpackage","finish");
+
+                    }
+                }
+            }
+            else
+
+            super.onPostExecute(jsonObject);
+        }
+    }
+
+    private void showUpdateDialog(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("A New Update is Available");
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse
+                        ("market://details?id=worthywalk.example.com.worthywalk")));
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//               getApplicationContext()
+                finish();
+                System.exit(0);
+            }
+        });
+
+        builder.setCancelable(false);
+        dialog = builder.show();
     }
 
     @Override

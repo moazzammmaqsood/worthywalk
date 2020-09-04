@@ -20,11 +20,12 @@ public class leaderadapter extends RecyclerView.Adapter {
 
 Context context;
     List<leaderinfo> list=new ArrayList<>();
+    int indexuser;
 
-
-    public leaderadapter(List<leaderinfo> list, Context context){
+    public leaderadapter(List<leaderinfo> list, Context context,int indexuser){
         this.list=list;
         this.context=context;
+        this.indexuser=indexuser;
     }
 
     @NonNull
@@ -97,6 +98,15 @@ Context context;
 //                winner.setVisibility(View.GONE);
 //
 //                second.setVisibility(View.VISIBLE);
+            }else if(info.pos==indexuser && position>1) {
+//                cards.setBackgroundColor(Color.parseColor("#00e600"));
+                   cards.setBackgroundColor(Color.parseColor("#8DC3A7"));
+
+
+                index.setTextColor(Color.WHITE);
+                name.setTextColor(Color.WHITE);
+                distance.setTextColor(Color.WHITE);
+
             }else {
                 cards.setBackgroundColor(Color.WHITE);
                 index.setTextColor(Color.BLACK);
@@ -107,7 +117,7 @@ Context context;
 //                    second.setVisibility(View.GONE);
 
             }
-            index.setText(String.valueOf(position+1));
+            index.setText(String.valueOf(info.pos));
         name.setText(info.name);
         distance.setText(info.distance);
 

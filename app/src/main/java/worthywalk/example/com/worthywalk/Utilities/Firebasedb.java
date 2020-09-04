@@ -91,9 +91,11 @@ public class Firebasedb {
 
 
 
+
         return deviceid;
 
 
+//        public String getcurrentversion()
 
 
 

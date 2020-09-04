@@ -9,9 +9,9 @@ android {
         applicationId "worthywalk.example.com.worthywalk"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 32
+        versionCode 35
         multiDexEnabled true
-        versionName "1.1.7"
+        versionName "1.1.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,5 +62,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+    implementation 'org.jsoup:jsoup:1.10.3'
 
 }
