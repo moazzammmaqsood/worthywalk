@@ -1040,10 +1040,11 @@ return true;
                 if(indexOfImage==0){
 
                     if (results[0] > 7 || results[0]<0)         TotalDistance += results[0];
-                } else if(indexOfImage==1){
+                }
+                else if(indexOfImage==1){
                     if (results[0] > 20 || results[0]<0)         TotalDistance += results[0];
 
-else {
+                    else {
                         if (results[0] > 5 || results[0]<0)         TotalDistance += results[0];
 
                     }
