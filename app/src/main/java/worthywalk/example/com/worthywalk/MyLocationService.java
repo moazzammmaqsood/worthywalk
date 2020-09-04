@@ -83,7 +83,8 @@ public class MyLocationService extends BroadcastReceiver {
             }
         }
         // Divide TotalDistance by 2 to get the accurate result
-        return Double.parseDouble(df2.format(TotalDistance/2));
+        return Double.parseDouble(df2.format(TotalDistance));
+
     }
     public static double getDiscardDistance(List<LatLng> points,int j){
 
