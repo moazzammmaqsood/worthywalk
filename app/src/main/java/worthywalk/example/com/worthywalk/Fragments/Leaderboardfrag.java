@@ -550,45 +550,45 @@ User user;
 //        });
 //
 // Refreshin Code
-        db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-            Map<String,Object> ok=new HashMap<>();
-
-            int count=0;
-
-                final Map<String, Object> finalDocdata = new HashMap<>();
-                finalDocdata.put("Totalknubs",0);
-
-                for (final DocumentSnapshot doc:
-                     queryDocumentSnapshots) {
-
-
-
-                    db.runTransaction(new Transaction.Function<Void>() {
-                        @Nullable
-                        @Override
-                        public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-                            transaction.update(leaders.document(doc.getId()), finalDocdata);
-
-
-
-                            return null;
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-
-                }
-                Log.d("checkdata",String.valueOf(count));
-
-            }
-        });
+//        db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//            Map<String,Object> ok=new HashMap<>();
+//
+//            int count=0;
+//
+//                final Map<String, Object> finalDocdata = new HashMap<>();
+//                finalDocdata.put("Totalknubs",0);
+//
+//                for (final DocumentSnapshot doc:
+//                     queryDocumentSnapshots) {
+//
+//
+//
+//                    db.runTransaction(new Transaction.Function<Void>() {
+//                        @Nullable
+//                        @Override
+//                        public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+//                            transaction.update(leaders.document(doc.getId()), finalDocdata);
+//
+//
+//
+//                            return null;
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//
+//
+//
+//                }
+//                Log.d("checkdata",String.valueOf(count));
+//
+//            }
+//        });
 
 
 //        db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -685,75 +685,75 @@ User user;
 
 //
 //////
-//        leaders.orderBy("Totalknubs", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//
-//
-//                if(task.isSuccessful()){
-////                    Toast.makeText(getContext(),"Sucees",Toast.LENGTH_LONG).show();
-//                int count =0;
-//                int innercount=0;
-//                    int indexuser=0;
-//
-//                    for(QueryDocumentSnapshot doc:task.getResult()){
-//
-//
-////                        String name=doc.getId();
-////                        String knubs=String.valueOf(doc.get("KnubsEarned"));
-////                        data.add(new leaderinfo(name,knubs,name));
-//
-//
-//
-//                if(doc.getBoolean("Permission")!=null && doc.getBoolean("Permission") ) {
-//                    String name = doc.getString("Firstname") + " " + doc.getString("Lastname");
-//                    String id = doc.getId();
-//                    String knubs = String.valueOf(doc.get("Totalknubs"));
-//                    count=count+1;
-//                    if (doc.getString("Firstname") != null) {
-//
-//                        if (id.equals(mAuth.getUid()) || count <= 20) {
-//
-//
-//
-//
-//if(id.equals(mAuth.getUid())) {
-////    Toast.makeText(getContext(),"my user",Toast.LENGTH_LONG).show();
-//    indexuser=count;
-//
-//
-//}
-//                            data.add(new leaderinfo(name, knubs, id, count));
-//
-//                            Log.d("checkuser ", id + " : " + mAuth.getUid());
-//
-//
-//                        }
-////                    Log.d("infoo",name);
-////
-//
-////                    Log.d("checkuser " , id);
-//
-//                        else if (doc.getBoolean("Permission") == null) {
-//                            Log.d("check error user ", doc.getId());
-//
-//                        }
-//                    }
-//////
-//
-//                }
-//
-//                         }
-//                    adapter=new leaderadapter(data,getContext(),indexuser);
-//                    recyclerView.setAdapter(adapter);
-//                }else {
-//                    Toast.makeText(getContext(),task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        leaders.orderBy("Totalknubs", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-//    }
+
+                if(task.isSuccessful()){
+//                    Toast.makeText(getContext(),"Sucees",Toast.LENGTH_LONG).show();
+                int count =0;
+                int innercount=0;
+                    int indexuser=0;
+
+                    for(QueryDocumentSnapshot doc:task.getResult()){
+
+
+//                        String name=doc.getId();
+//                        String knubs=String.valueOf(doc.get("KnubsEarned"));
+//                        data.add(new leaderinfo(name,knubs,name));
+
+
+
+                if(doc.getBoolean("Permission")!=null && doc.getBoolean("Permission") ) {
+                    String name = doc.getString("Firstname") + " " + doc.getString("Lastname");
+                    String id = doc.getId();
+                    String knubs = String.valueOf(doc.get("Totalknubs"));
+                    count=count+1;
+                    if (doc.getString("Firstname") != null) {
+
+                        if (id.equals(mAuth.getUid()) || count <= 20) {
+
+
+
+
+if(id.equals(mAuth.getUid())) {
+//    Toast.makeText(getContext(),"my user",Toast.LENGTH_LONG).show();
+    indexuser=count;
+
+
+}
+                            data.add(new leaderinfo(name, knubs, id, count));
+
+                            Log.d("checkuser ", id + " : " + mAuth.getUid());
+
+
+                        }
+//                    Log.d("infoo",name);
 //
+
+//                    Log.d("checkuser " , id);
+
+                        else if (doc.getBoolean("Permission") == null) {
+                            Log.d("check error user ", doc.getId());
+
+                        }
+                    }
+////
+
+                }
+
+                         }
+                    adapter=new leaderadapter(data,getContext(),indexuser);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    Toast.makeText(getContext(),task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
 //    public  Map<String,Object> adddata(User users){
 //        final Map<String, Object> docData = new HashMap<>();
 //
@@ -773,7 +773,7 @@ User user;
 //
 //
 //        return docData;
-    }
+//    }
 
 //
 //    private void dataprocess(){
