@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationResult;
@@ -127,11 +128,35 @@ public class MyLocationService extends BroadcastReceiver {
         // Divide TotalDistance by 2 to get the accurate result
         return Double.parseDouble(df2.format(TotalDistance/2));
     }
-
+    static double delta_disace = 0;
+    static double calorues = 0;
     public static double getCalories(double distance){
 
-        // In 22 meter 1Kcal is burnt
-        return Double.parseDouble(df2.format(distance/22));
+        //return Double.parseDouble(df2.format(distance/22));
+        if(delta_disace - distance > 0)
+        {
+            long elapsedMillis = SystemClock.elapsedRealtime() - SensorForeground.getTime();
+            User user = UserSingleton.getUser();
+            distance = distance / 1609;
+            elapsedMillis = elapsedMillis / 1000;
+
+            double x = (0.0215 * (distance/elapsedMillis * 96.5606) * 3 - 0.1765 * (distance/elapsedMillis * 96.5606)*2
+                    + 0.8710 * distance/elapsedMillis * 96.5606 + 1.4577) * user.Weight/2.22 * elapsedMillis/60;
+
+            // In 22 meter 1Kcal is burnt
+            //Duration (in minutes)*(MET*3.5*weight in kg)/200
+
+            System.out.println("Time = "+elapsedMillis);
+            delta_disace = distance;
+            //return Double.parseDouble(df2.format(distance/22));
+            return Double.parseDouble(df2.format(x));
+        }
+        else
+        {
+            return calorues;
+        }
+
+
     }
 
 }
