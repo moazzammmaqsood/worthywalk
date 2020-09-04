@@ -13,6 +13,7 @@ import android.widget.Chronometer;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import worthywalk.example.com.worthywalk.Models.User;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -25,7 +26,8 @@ import static  worthywalk.example.com.worthywalk.App.CHANNEL_ID;
 public class SensorForeground extends Service {
     public static final String MyPREFERENCES = "MyPrefs" ;
     SharedPreferences sharedpreferences;
-    User user=new User();
+    //User user=new User();
+    User user = UserSingleton.getUser();
 
     //To see whether service is running or not
     public static boolean isServiceRunning = false;

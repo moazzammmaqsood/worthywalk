@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import worthywalk.example.com.worthywalk.Models.User;
 import worthywalk.example.com.worthywalk.Models.cardInfo;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 
 public class Dealslist extends Fragment {
@@ -42,7 +43,9 @@ public class Dealslist extends Fragment {
     FirebaseFirestore db;
 
     String category;
-    User user = new User();
+    //User user = new User();
+    User user = UserSingleton.getUser();
+
     MainActivity activity;
     String request_url = "http://localhost/sliderjsonoutput.php";
 

@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import worthywalk.example.com.worthywalk.Models.FBuser;
 import worthywalk.example.com.worthywalk.Models.User;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -55,7 +56,9 @@ public class login extends AppCompatActivity {
     TextView signUp,forgot;
     String token;
     public static String TAG="facebook login";
-    User user = new User();
+    //User user = new User();
+    User user = UserSingleton.getUser();
+
     private FirebaseAuth mAuth;
     EditText email, password;
     public static final String MyPREFERENCES = "MyPrefs";

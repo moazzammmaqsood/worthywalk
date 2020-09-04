@@ -13,7 +13,7 @@ public class UserSingleton
 
     }
 
-    public User getUser()
+    public static User getUser()
     {
         if(user == null)
         {
@@ -42,7 +42,7 @@ public class UserSingleton
     }
 
 
-    public void setUser(User users){
+    public static void setUser(User users){
         user=users;
     }
 

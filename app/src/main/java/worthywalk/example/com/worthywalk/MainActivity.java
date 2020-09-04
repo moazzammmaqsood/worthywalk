@@ -41,6 +41,7 @@ import worthywalk.example.com.worthywalk.Fragments.homeFragment;
 import worthywalk.example.com.worthywalk.Fragments.storefrag;
 import worthywalk.example.com.worthywalk.Models.User;
 import worthywalk.example.com.worthywalk.Utilities.Firebasedb;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 public class MainActivity extends AppCompatActivity implements storefrag.Updateuser {
     ArrayList<String> mresources=new ArrayList<>();
@@ -75,6 +76,7 @@ LoginManager loginManager;
     String[] array;
     ArrayList<String> mResources=new ArrayList<>();
     public static User usermain=new User();
+    //User usermain = UserSingleton.getUser();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

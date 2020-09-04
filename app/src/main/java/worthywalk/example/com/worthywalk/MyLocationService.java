@@ -14,9 +14,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import worthywalk.example.com.worthywalk.Models.User;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 public class MyLocationService extends BroadcastReceiver {
-    User user=new User();
+//    User user=new User();
+    User user = UserSingleton.getUser();
+
     static walksession walk=new walksession();
     static long oldtime,newtime;
 

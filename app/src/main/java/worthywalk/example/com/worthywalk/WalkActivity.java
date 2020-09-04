@@ -84,6 +84,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import worthywalk.example.com.worthywalk.Models.Promocode;
 import worthywalk.example.com.worthywalk.Models.User;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 public class WalkActivity extends AppCompatActivity implements Chronometer.OnChronometerTickListener {
     int [] icons=  new int[]{R.drawable.ic_runer_silhouette_running_fast,R.drawable.ic_man_cycling};
@@ -138,7 +139,9 @@ public class WalkActivity extends AppCompatActivity implements Chronometer.OnChr
     StepDetector stepDetector;
     FloatingActionButton fabbutton;
     public static Chronometer chronometer;
-    User user=new User();
+//    User user=new User();
+    User user = UserSingleton.getUser();
+
     LatLng point;
     String  useruid;
     double distanceOnMap=0;

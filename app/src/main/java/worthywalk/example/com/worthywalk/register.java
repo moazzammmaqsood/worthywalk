@@ -52,6 +52,7 @@ import androidx.core.app.ActivityCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 import worthywalk.example.com.worthywalk.Models.FBuser;
 import worthywalk.example.com.worthywalk.Models.User;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 public class register extends AppCompatActivity implements TextWatcher {
     String fname, lname, phn, gend, days, months, years, image;
@@ -327,8 +328,10 @@ public class register extends AppCompatActivity implements TextWatcher {
 
                     String token = sharedpreferences.getString("Token", "");
 
-                    if (fbuser != null)
-                        user = new User(address,fbuser.email,fname, lname, phn, gend, hei, wei, age, d, 500, fbuser.imageurl, 0, false, token);
+                    if (fbuser != null) {
+                        user = new User(address, fbuser.email, fname, lname, phn, gend, hei, wei, age, d, 500, fbuser.imageurl, 0, false, token);
+                        UserSingleton.setUser(user);
+                    }
                     else if(update){
 //                        String Profilepicture,
 
@@ -341,8 +344,12 @@ public class register extends AppCompatActivity implements TextWatcher {
 
 
                         user = new User(address,updateuser.Email,fname, lname, phn, gend, hei, wei, age, d, updateuser.Knubs, "", updateuser.totalknubs, false, token);
+                        UserSingleton.setUser(user);
                     }else
+                    {
                         user = new User(address,Email,fname, lname, phn, gend, hei, wei, age, d, 500, "", 0, false, token);
+                        UserSingleton.setUser(user);
+                    }
 
                     String userjson = gson.toJson(user);
                     SharedPreferences.Editor prefsEditor = sharedpreferences.edit();

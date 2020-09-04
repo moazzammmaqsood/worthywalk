@@ -20,6 +20,7 @@ import worthywalk.example.com.worthywalk.R;
 import worthywalk.example.com.worthywalk.Models.User;
 import worthywalk.example.com.worthywalk.Models.cardInfo;
 import worthywalk.example.com.worthywalk.Utilities.Firebasedb;
+import worthywalk.example.com.worthywalk.Utilities.UserSingleton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,7 +63,9 @@ FirebaseFirestore db;
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
 Context context;
 //    String[] mresources=new String[1];
-    User user=new User();
+//    User user=new User();
+    User user = UserSingleton.getUser();
+
     public storefrag(User user, ArrayList<String> getstoreads) {
         this.user=user;
         this.mresources=getstoreads;
