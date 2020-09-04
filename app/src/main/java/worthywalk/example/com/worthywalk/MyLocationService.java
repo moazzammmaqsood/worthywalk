@@ -133,27 +133,29 @@ public class MyLocationService extends BroadcastReceiver {
     public static double getCalories(double distance){
 
         //return Double.parseDouble(df2.format(distance/22));
-        if(delta_disace - distance > 0)
+        if(delta_disace - distance != 0)
         {
             long elapsedMillis = SystemClock.elapsedRealtime() - SensorForeground.getTime();
             User user = UserSingleton.getUser();
-            distance = distance / 1609;
-            elapsedMillis = elapsedMillis / 1000;
+            delta_disace = distance ;
+            elapsedMillis = elapsedMillis / 1000 +1;
 
             double x = (0.0215 * (distance/elapsedMillis * 96.5606) * 3 - 0.1765 * (distance/elapsedMillis * 96.5606)*2
-                    + 0.8710 * distance/elapsedMillis * 96.5606 + 1.4577) * user.Weight/2.22 * elapsedMillis/60;
+                    + 0.8710 * distance/elapsedMillis * 96.5606 + 1.4577) * /*user.Weight/2.22 **/ elapsedMillis/60;
 
             // In 22 meter 1Kcal is burnt
             //Duration (in minutes)*(MET*3.5*weight in kg)/200
 
-            System.out.println("Time = "+elapsedMillis);
+            System.out.println("Time = "+elapsedMillis+"User "+user.Weight);
             delta_disace = distance;
+            calorues = x;
             //return Double.parseDouble(df2.format(distance/22));
             return Double.parseDouble(df2.format(x));
         }
         else
         {
-            return calorues;
+            return Double.parseDouble(df2.format(calorues));
+            //return calorues;
         }
 
 
